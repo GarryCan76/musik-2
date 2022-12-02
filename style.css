@@ -1,0 +1,12 @@
+*{
+    border: black solid 1px;
+}
+body > div{
+    display: flex;
+    flex-direction: row;
+}
+body > div > div{
+    background-color: white;
+    width: 100px;
+    height: 100px;
+}
