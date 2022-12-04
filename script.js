@@ -48,7 +48,7 @@ function color(col, row){
         row_array[row].style.backgroundColor = "black";
     }
 }
-setInterval(play, 1000)
+setInterval(play, 400)
 function play(){
     for (let col = 0; col < track_matrix.length; col++){
         row = track_matrix[col]
