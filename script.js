@@ -3,30 +3,47 @@ let sound = context.createOscillator();
 let volume = new GainNode(context,{gain:0.1});
 let frequency = 10
 let tick = 0;
-let grid_array = document.getElementById("body").children;
-let track_matrix = [[0, 0, 0, 0, 0, 0],
-                  [0, 0, 0, 0, 0, 0],
-                  [0, 0, 0, 0, 0, 0],
-                  [0, 0, 0, 0, 0, 0],
-                  [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-                  [0, 0, 0, 0, 0, 0]]
-
+let setup = true
+let grid_array = document.body.children
+let grid_row = grid_array[0].children
+let track_matrix = []
+let col_lenght = 10
+let row_lenght = 30
 sound.start()
 volume.connect(context.destination)
+setup_func()
+function setup_func(){
+    if (setup === true){
+        setup = false
+        for (var x = 0; x < col_lenght; x++){
+            div_col = document.createElement('div');
+            div_col.classList.add('col');
+            const col = document.body.appendChild(div_col);
+        }
+        var cols = document.getElementsByClassName('col')
+        for (var i = 0; i < cols.length; i++){
+            for (var a = 0; a < row_lenght; a++){
+                div = document.createElement('div')
+                cols[i].appendChild(div)
+            }
+        }
+
+        grid_array = document.body.children
+        grid_row = grid_array[1].children
+        for (let i = 0; i < grid_array.length; i++){
+            track_matrix.push([])
+            for (let r = 0; r < grid_row.length; r++){
+                track_matrix[i].push(0)
+            }
+        }
+        console.log(track_matrix)
+    }
+}
 loop()
 function loop(){
-    for (let col = 0; col < grid_array.length - 1; col++){
+    for (let col = 0; col < grid_array.length; col++){
         row_array = grid_array[col].children
         for (let row = 0; row < row_array.length; row++){
-            console.log(row_array[row])
             row_array[row].addEventListener("click", function (){ color(col, row);})
         }
     }
@@ -48,20 +65,18 @@ function color(col, row){
         row_array[row].style.backgroundColor = "black";
     }
 }
-setInterval(play, 400)
+setInterval(play, 200)
 function play(){
     for (let col = 0; col < track_matrix.length; col++){
         row = track_matrix[col]
-        console.log(row[tick])
         if (row[tick] === 1){
             frequency = 100 * col;
         }
     }
-    if (tick === 5){
+    if (tick === grid_row.length){
         tick = 0
     }else {
         tick += 1
     }
-    sound.frequency.value = frequency;
-    console.log(frequency)
+    sound.frequency.value = frequency
 }
