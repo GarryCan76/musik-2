@@ -1,16 +1,18 @@
 let context = new AudioContext();
 let sound = context.createOscillator();
 let volume = new GainNode(context,{gain:0.1});
-let frequency = 10
+const filters = [context.createBiquadFilter(), context.createBiquadFilter(), context.createBiquadFilter(), context.createBiquadFilter()]
+let frequency = 100
 let tick = 0;
 let setup = true
 let grid_array = document.body.children
 let grid_row = grid_array[0].children
 let track_matrix = []
-let col_lenght = 10
-let row_lenght = 30
+let col_lenght = 20
+let row_lenght = 20
+let keys = []
+
 sound.start()
-volume.connect(context.destination)
 setup_func()
 function setup_func(){
     if (setup === true){
@@ -67,16 +69,26 @@ function color(col, row){
 }
 setInterval(play, 200)
 function play(){
+    keys = []
     for (let col = 0; col < track_matrix.length; col++){
         row = track_matrix[col]
         if (row[tick] === 1){
-            frequency = 100 * col;
+            keys.push(col)
         }
     }
-    if (tick === grid_row.length){
+    for (let f = 0; f < filters.length; f++){
+        if (keys[f] !== undefined){
+            sound.connect(filters[f]).connect(context.destination)
+            frequency = keys[f] * 10;
+            filters[f].frequency.value = frequency;
+        }else {
+            filters[f].frequency.value = 0;
+        }
+    }
+    console.log(track_matrix)
+    if (tick === grid_row.length - 1){
         tick = 0
     }else {
         tick += 1
     }
-    sound.frequency.value = frequency
 }
