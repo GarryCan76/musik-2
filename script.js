@@ -7,7 +7,7 @@ let setup = true
 let grid_array = document.body.children
 let grid_row = grid_array[0].children
 let track_matrix = []
-let col_length = 20
+let col_length = 25
 let row_length = 16
 let keys = []
 let track_time = []
@@ -92,7 +92,7 @@ function play(){
     for (let f = 0; f < ocses.length; f++){
         if (keys[f] !== undefined){
             ocses[f].connect(volume).connect(context.destination)
-            frequency = keys[f] * 25;
+            frequency = keys[f] * 15;
             ocses[f].frequency.value = frequency;
         }else {
             ocses[f].frequency.value = 0;
