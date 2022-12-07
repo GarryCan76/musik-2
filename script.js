@@ -1,34 +1,39 @@
 let context = new AudioContext();
-let sound = context.createOscillator();
 let volume = new GainNode(context,{gain:0.1});
-const filters = [context.createBiquadFilter(), context.createBiquadFilter(), context.createBiquadFilter(), context.createBiquadFilter()]
+const ocses = [];
 let frequency = 100
 let tick = 0;
 let setup = true
 let grid_array = document.body.children
 let grid_row = grid_array[0].children
 let track_matrix = []
-let col_lenght = 20
-let row_lenght = 20
+let col_length = 20
+let row_length = 16
 let keys = []
+let track_time = []
 
-sound.start()
 setup_func()
 function setup_func(){
     if (setup === true){
         setup = false
-        for (var x = 0; x < col_lenght; x++){
+        for (let i = 0; i < 10; i++){
+            var ocs = context.createOscillator();
+            ocses.push(ocs)
+            ocses[i].start()
+        }
+        for (let x = 0; x < col_length; x++){
             div_col = document.createElement('div');
             div_col.classList.add('col');
-            const col = document.body.appendChild(div_col);
+            col = document.body.appendChild(div_col);
         }
         var cols = document.getElementsByClassName('col')
-        for (var i = 0; i < cols.length; i++){
-            for (var a = 0; a < row_lenght; a++){
+        for (let i = 0; i < cols.length; i++){
+            for (let a = 0; a < row_length; a++){
                 div = document.createElement('div')
                 cols[i].appendChild(div)
             }
         }
+        console.log(ocses)
 
         grid_array = document.body.children
         grid_row = grid_array[1].children
@@ -44,7 +49,7 @@ function setup_func(){
 loop()
 function loop(){
     for (let col = 0; col < grid_array.length; col++){
-        row_array = grid_array[col].children
+        row_array = grid_array[col].children;
         for (let row = 0; row < row_array.length; row++){
             row_array[row].addEventListener("click", function (){ color(col, row);})
         }
@@ -53,42 +58,49 @@ function loop(){
 
 function color(col, row){
     context.resume()
-    sound.connect(volume)
     y = track_matrix[col]
     if (y[row] === 0){
         y[row] = 1;
     }else {
         y[row] = 0;
     }
-    row_array = grid_array[col].children
-    if (row_array[row].style.backgroundColor === "black"){
-        row_array[row].style.backgroundColor = "white";
+    row_array = grid_array[col].children;
+    if (row_array[row].style.backgroundColor === "skyblue"){
+        row_array[row].style.backgroundColor = "palegreen";
     }else {
-        row_array[row].style.backgroundColor = "black";
+        row_array[row].style.backgroundColor = "skyblue";
     }
 }
 setInterval(play, 200)
 function play(){
-    keys = []
+    keys = [];
+    for (let i = 1; i < track_time.length; i++){
+        track_time[i].style.filter = "hue-rotate(0deg)";
+    }
+    track_time = []
     for (let col = 0; col < track_matrix.length; col++){
         row = track_matrix[col]
+        row_array = grid_array[col].children;
+        track_time.push(row_array[tick])
         if (row[tick] === 1){
             keys.push(col)
         }
     }
-    for (let f = 0; f < filters.length; f++){
+    for (let i = 1; i < track_time.length; i++){
+        track_time[i].style.filter = "hue-rotate(90deg)";
+    }
+    for (let f = 0; f < ocses.length; f++){
         if (keys[f] !== undefined){
-            sound.connect(filters[f]).connect(context.destination)
-            frequency = keys[f] * 10;
-            filters[f].frequency.value = frequency;
+            ocses[f].connect(volume).connect(context.destination)
+            frequency = keys[f] * 25;
+            ocses[f].frequency.value = frequency;
         }else {
-            filters[f].frequency.value = 0;
+            ocses[f].frequency.value = 0;
         }
     }
-    console.log(track_matrix)
     if (tick === grid_row.length - 1){
-        tick = 0
+        tick = 0;
     }else {
-        tick += 1
+        tick += 1;
     }
 }

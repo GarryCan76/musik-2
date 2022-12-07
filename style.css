@@ -6,7 +6,7 @@ body > div{
     flex-direction: row;
 }
 body > div > div{
-    background-color: white;
+    background-color: palegreen;
     width: 100px;
-    height: 20px;
+    height: 30px;
 }
