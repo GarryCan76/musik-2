@@ -1,12 +1,20 @@
 *{
     border: black solid 1px;
 }
-body > div{
+#midi > div{
     display: flex;
     flex-direction: row;
 }
-body > div > div{
+#midi > div > div{
     background-color: palegreen;
     width: 100px;
     height: 30px;
+}
+#synth{
+    background-color: gray;
+    width: 100%;
+}
+#synth > div{
+    width: 100px;
+    height: 100px;
 }

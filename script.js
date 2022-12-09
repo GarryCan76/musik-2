@@ -4,8 +4,6 @@ const ocses = [];
 let frequency = 100
 let tick = 0;
 let setup = true
-let grid_array = document.body.children
-let grid_row = grid_array[0].children
 let track_matrix = []
 let col_length = 25
 let row_length = 16
@@ -24,7 +22,7 @@ function setup_func(){
         for (let x = 0; x < col_length; x++){
             div_col = document.createElement('div');
             div_col.classList.add('col');
-            col = document.body.appendChild(div_col);
+            col = document.getElementById('midi').appendChild(div_col);
         }
         var cols = document.getElementsByClassName('col')
         for (let i = 0; i < cols.length; i++){
@@ -35,7 +33,7 @@ function setup_func(){
         }
         console.log(ocses)
 
-        grid_array = document.body.children
+        grid_array = document.getElementById('midi').children
         grid_row = grid_array[1].children
         for (let i = 0; i < grid_array.length; i++){
             track_matrix.push([])
@@ -71,10 +69,10 @@ function color(col, row){
         row_array[row].style.backgroundColor = "skyblue";
     }
 }
-setInterval(play, 200)
+setInterval(play, 100)
 function play(){
     keys = [];
-    for (let i = 1; i < track_time.length; i++){
+    for (let i = 0; i < track_time.length; i++){
         track_time[i].style.filter = "hue-rotate(0deg)";
     }
     track_time = []
@@ -86,13 +84,13 @@ function play(){
             keys.push(col)
         }
     }
-    for (let i = 1; i < track_time.length; i++){
+    for (let i = 0; i < track_time.length; i++){
         track_time[i].style.filter = "hue-rotate(90deg)";
     }
     for (let f = 0; f < ocses.length; f++){
         if (keys[f] !== undefined){
             ocses[f].connect(volume).connect(context.destination)
-            frequency = keys[f] * 15;
+            frequency = keys[f] * 15 + 50;
             ocses[f].frequency.value = frequency;
         }else {
             ocses[f].frequency.value = 0;
