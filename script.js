@@ -6,15 +6,17 @@ let tick = 0;
 let setup = true
 let track_matrix = []
 let col_length = 25
-let row_length = 16
+let row_length = 4
 let keys = []
 let track_time = []
-
+let ocs_type = 'sine'
+const detunes = ["detune_label1", "detune_label2", "detune_label3", "detune_label4"]
+const types = ["type_label1", "type_label2", "type_label3", "type_label4"]
 setup_func()
 function setup_func(){
     if (setup === true){
         setup = false
-        for (let i = 0; i < 10; i++){
+        for (let i = 0; i < 4; i++){
             var ocs = context.createOscillator();
             ocses.push(ocs)
             ocses[i].start()
@@ -69,7 +71,7 @@ function color(col, row){
         row_array[row].style.backgroundColor = "skyblue";
     }
 }
-setInterval(play, 100)
+setInterval(play, 300)
 function play(){
     keys = [];
     for (let i = 0; i < track_time.length; i++){
@@ -89,8 +91,7 @@ function play(){
     }
     for (let f = 0; f < ocses.length; f++){
         if (keys[f] !== undefined){
-            ocses[f].connect(volume).connect(context.destination)
-            frequency = keys[f] * 15 + 50;
+            frequency = keys[0] * 15 + 50;
             ocses[f].frequency.value = frequency;
         }else {
             ocses[f].frequency.value = 0;
@@ -100,5 +101,31 @@ function play(){
         tick = 0;
     }else {
         tick += 1;
+    }
+}
+function synth_func(type, value, ocs){
+    if (type === "toggle_ocs"){
+        if (ocs.checked){
+            ocses[value].connect(volume).connect(context.destination)
+        }else {
+            ocses[value].disconnect(volume)
+        }
+    }
+    if (type === "detune_ocs"){
+        document.getElementById(detunes[value]).innerHTML = ocs.value;
+        ocses[value].detune.value = ocs.value;
+    }
+    if (type === "type_ocs"){
+        if (ocs.value === "0"){
+            ocs_type = 'sine';
+        }else if (ocs.value === "1"){
+            ocs_type = 'square';
+        }else if (ocs.value === "2"){
+            ocs_type = 'sawtooth';
+        }else if (ocs.value === "3"){
+            ocs_type = 'triangle';
+        }
+        ocses[value].type = ocs_type;
+        document.getElementById(types[value]).innerHTML = ocs_type;
     }
 }
