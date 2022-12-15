@@ -11,10 +11,12 @@
     height: 30px;
 }
 #synth{
+    display: flex;
+    flex-direction: row;
     background-color: gray;
     width: 100%;
 }
-#synth > div{
+#synth > div > div{
     min-width: 100px;
     min-height: 100px;
 }

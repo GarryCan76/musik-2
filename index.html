@@ -8,35 +8,45 @@
 <body id="body">
 </body>
 <div id="midi"></div>
+<h1>synthesizer</h1>
 <div id="synth">
-    <h1>synthesizer</h1>
-    <div><p>ocs1</p>
-        <input type="checkbox" oninput="synth_func('toggle_ocs', 0, this)">
-        <label id="detune_label1" for="detune1">0</label>
-        <input type="range" id="detune1" value="0" min="-100" max="100" oninput="synth_func('detune_ocs', 0, this)">
-        <input type="range" id="type1" value="0" max="3" oninput="synth_func('type_ocs', 0, this)">
-        <label id="type_label1" for="type1">sine</label>
+
+    <div>
+        <div><p>ocs1</p>
+            <input type="checkbox" oninput="synth_func('toggle_ocs', 0, this)">
+            <label id="detune_label1" for="detune1">0</label>
+            <input type="range" id="detune1" value="0" min="-1000" max="1000" oninput="synth_func('detune_ocs', 0, this)">
+            <input type="range" id="type1" value="0" max="3" oninput="synth_func('type_ocs', 0, this)">
+            <label id="type_label1" for="type1">sine</label>
+        </div>
+        <div><p>ocs2</p>
+            <input type="checkbox" oninput="synth_func('toggle_ocs', 1, this)">
+            <label id="detune_label2" for="detune1">0</label>
+            <input type="range" id="detune2" value="0" min="-1000" max="1000" oninput="synth_func('detune_ocs', 1, this)">
+            <input type="range" id="type2" value="0" max="3" oninput="synth_func('type_ocs', 1, this)">
+            <label id="type_label2" for="type2">sine</label>
+        </div>
+        <div><p>ocs3</p>
+            <input type="checkbox" oninput="synth_func('toggle_ocs', 2, this)">
+            <label id="detune_label3" for="detune3">0</label>
+            <input type="range" id="detune3" value="0" min="-1000" max="1000" oninput="synth_func('detune_ocs', 2, this)">
+            <input type="range" id="type3" value="0" max="3" oninput="synth_func('type_ocs', 2, this)">
+            <label id="type_label3" for="type3">sine</label>
+        </div>
+        <div><p>ocs4</p>
+            <input type="checkbox" oninput="synth_func('toggle_ocs', 3, this)">
+            <label id="detune_label4" for="detune4">0</label>
+            <input type="range" id="detune4" value="0" min="-1000" max="1000" oninput="synth_func('detune_ocs', 3, this)">
+            <input type="range" id="type4" value="0" max="3" oninput="synth_func('type_ocs', 3, this)">
+            <label id="type_label4" for="type4">sine</label>
+        </div>
     </div>
-    <div><p>ocs2</p>
-        <input type="checkbox" oninput="synth_func('toggle_ocs', 1, this)">
-        <label id="detune_label2" for="detune1">0</label>
-        <input type="range" id="detune2" value="0" min="-100" max="100" oninput="synth_func('detune_ocs', 1, this)">
-        <input type="range" id="type2" value="0" max="3" oninput="synth_func('type_ocs', 1, this)">
-        <label id="type_label2" for="type2">sine</label>
-    </div>
-    <div><p>ocs3</p>
-        <input type="checkbox" oninput="synth_func('toggle_ocs', 2, this)">
-        <label id="detune_label3" for="detune3">0</label>
-        <input type="range" id="detune3" value="0" min="-100" max="100" oninput="synth_func('detune_ocs', 2, this)">
-        <input type="range" id="type3" value="0" max="3" oninput="synth_func('type_ocs', 2, this)">
-        <label id="type_label3" for="type3">sine</label>
-    </div>
-    <div><p>ocs4</p>
-        <input type="checkbox" oninput="synth_func('toggle_ocs', 3, this)">
-        <label id="detune_label4" for="detune4">0</label>
-        <input type="range" id="detune4" value="0" min="-100" max="100" oninput="synth_func('detune_ocs', 3, this)">
-        <input type="range" id="type4" value="0" max="3" oninput="synth_func('type_ocs', 3, this)">
-        <label id="type_label4" for="type4">sine</label>
+    <div>
+        <div><p>filter</p>
+            <input type="checkbox" oninput="synth_func('toggle_filter', 0, this)">
+            <input type="range" id="filt_freq" value="500" max="3000" oninput="synth_func('filt_freq', 0, this)">
+            <label id="filt_freq_label" for="filt_freq"></label>
+        </div>
     </div>
 </div>
 <script src="script.js"></script>
