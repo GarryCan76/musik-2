@@ -6,14 +6,14 @@ let tick = 0;
 let setup = true
 let track_matrix = []
 let col_length = 20
-let row_length = 16
+let row_length = 8
 let keys = []
 let track_time = []
 let ocs_type = 'sine'
 let nodes = [null];
 let con_nect = true
-const detunes = ["detune_label1", "detune_label2", "detune_label3", "detune_label4"]
-const types = ["type_label1", "type_label2", "type_label3", "type_label4"]
+const detunes = ["detune_label1", "detune_label2", "detune_label3", "detune_label4"];
+const types = ["type_label1", "type_label2", "type_label3", "type_label4"];
 let destination = false;
 let node = true;
 
@@ -80,7 +80,7 @@ function color(col, row){
         row_array[row].style.backgroundColor = "skyblue";
     }
 }
-setInterval(play, 200)
+setInterval(play, 400)
 function play(){
     keys = [];
     for (let i = 0; i < track_time.length; i++){
@@ -156,20 +156,16 @@ function synth_func(type, num, ocs){
             }
             con_nect = true
         }
-
         if (con_nect === true){
-            for (let i = 1; i < nodes.length; i++){
-                if (i !== !nodes.length){
-                    volume.disconnect(nodes[i])
-                }
-            }
             if (nodes[0] === null){
                 volume.connect(context.destination)
-                console.log('off')
                 destination = true;
             }else {
                 volume.connect(nodes[0])
                 nodes[nodes.length - 1].connect(context.destination)
+                if (nodes.length > 1){
+                    nodes[0].connect(nodes[1])
+                }
                 node = true;
                 if (destination === true){
                     volume.disconnect(context.destination)
@@ -179,12 +175,36 @@ function synth_func(type, num, ocs){
             }
             if (node === false){
                 nodes[nodes.length - 1].disconnect(context.destination)
-                console.log('on')
             }
         }
-        if (type === 'filt_freq' && nodes[0] !== null){
-            nodes[0].frequency.value = ocs.value;
-            document.getElementById('filt_freq_label').innerHTML = ocs.value
+        if (nodes[0] !== null){
+            if (type === 'filt_freq'){
+                nodes[0].frequency.value = ocs.value;
+                document.getElementById('filt_freq_label').innerHTML = ocs.value;
+            }
+            if (type === 'filt_q'){
+                nodes[0].Q.value = ocs.value;
+                document.getElementById('filt_q_label').innerHTML = ocs.value;
+            }
+            if (type === 'filt_pass'){
+                let filtpass = 'lowpass'
+                if (ocs.value === "0") {
+                    filtpass = 'lowpass';
+                } else if (ocs.value === "1") {
+                    filtpass = 'highpass';
+                } else if (ocs.value === "2") {
+                    filtpass = 'bandpass';
+                } else if (ocs.value === "3") {
+                    filtpass = 'allpass';
+                }
+                nodes[0].type = filtpass;
+                document.getElementById('filt_pass_label').innerHTML = filtpass;
+            }
+        }
+        if (type === 'toggle_convol' && x === 1){
+            nodes[1] = context.createDynamicsCompressor()
+            nodes[1].release.value = 0.25
+
         }
     }
 }

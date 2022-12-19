@@ -8,7 +8,7 @@
 <body id="body">
 </body>
 <div id="midi"></div>
-<h1>synthesizer</h1>
+<h1>synthesizer - wurk in progress</h1>
 <div id="synth">
 
     <div>
@@ -46,6 +46,16 @@
             <input type="checkbox" oninput="synth_func('toggle_filter', 0, this)">
             <input type="range" id="filt_freq" value="500" max="3000" oninput="synth_func('filt_freq', 0, this)">
             <label id="filt_freq_label" for="filt_freq"></label>
+            <input type="range" id="filt_q" value="1" max="100" oninput="synth_func('filt_q', 0, this)">
+            <label id="filt_q_label" for="filt_q"></label>
+            <input type="range" id="filt_pass" value="0" max="3" oninput="synth_func('filt_pass', 0, this)">
+            <label id="filt_pass_label" for="filt_pass">lowpass</label>
+        </div>
+    </div>
+    <div>
+        <div>
+            <p>convolver</p>
+            <input type="checkbox" oninput="synth_func('toggle_convol', 0, this)">
         </div>
     </div>
 </div>
