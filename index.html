@@ -42,20 +42,34 @@
         </div>
     </div>
     <div>
+        <div>
+            <p>Master Volume</p>
+            <input type="range" id="volume" step="" value="4" max="100" oninput="synth_func('volume', 0, this)">
+            <label id="volume_label" for="volume">4</label>
+        </div>
         <div><p>filter</p>
             <input type="checkbox" oninput="synth_func('toggle_filter', 0, this)">
-            <input type="range" id="filt_freq" value="500" max="3000" oninput="synth_func('filt_freq', 0, this)">
-            <label id="filt_freq_label" for="filt_freq"></label>
-            <input type="range" id="filt_q" value="1" max="100" oninput="synth_func('filt_q', 0, this)">
-            <label id="filt_q_label" for="filt_q"></label>
-            <input type="range" id="filt_pass" value="0" max="3" oninput="synth_func('filt_pass', 0, this)">
-            <label id="filt_pass_label" for="filt_pass">lowpass</label>
+            <input type="range" id="filt_freq1" value="500" max="3000" oninput="synth_func('filt_freq', 0, this)">
+            <label id="filt_freq_label1" for="filt_freq1">500</label>
+            <input type="range" id="filt_q1" value="1" max="100" oninput="synth_func('filt_q', 0, this)">
+            <label id="filt_q_label1" for="filt_q1">1</label>
+            <input type="range" id="filt_pass1" value="0" max="3" oninput="synth_func('filt_pass', 0, this)">
+            <label id="filt_pass_label1" for="filt_pass1">lowpass</label>
         </div>
-    </div>
-    <div>
+        <div><p>filter</p>
+            <input type="checkbox" oninput="synth_func('toggle_filter', 1, this)">
+            <input type="range" id="filt_freq2" value="500" max="3000" oninput="synth_func('filt_freq', 1, this)">
+            <label id="filt_freq_label2" for="filt_freq2">500</label>
+            <input type="range" id="filt_q2" value="1" max="100" oninput="synth_func('filt_q', 1, this)">
+            <label id="filt_q_label2" for="filt_q2">1</label>
+            <input type="range" id="filt_pass2" value="0" max="3" oninput="synth_func('filt_pass', 1, this)">
+            <label id="filt_pass_label2" for="filt_pass2">lowpass</label>
+        </div>
         <div>
-            <p>convolver</p>
-            <input type="checkbox" oninput="synth_func('toggle_convol', 0, this)">
+            <p>Pan</p>
+            <input type="checkbox" oninput="synth_func('toggle_pan', 2, this)">
+            <input type="range" id="panner" step="0.1" value="0" min="-1" max="1" oninput="synth_func('panner', 2, this)">
+            <label id="panner_label" for="panner">0</label>
         </div>
     </div>
 </div>

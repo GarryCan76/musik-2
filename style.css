@@ -1,14 +1,20 @@
 *{
-    border: black solid 1px;
+    /*border: black solid 1px;*/
+}
+body{
+    background-color: dimgray;
 }
 #midi > div{
     display: flex;
     flex-direction: row;
 }
 #midi > div > div{
-    background-color: palegreen;
+    background-color: rgb(0, 217, 255);
     width: 100px;
     height: 30px;
+    border-radius: 5px;
+    margin: 2px;
+    background-image: linear-gradient(rgb(0, 217, 255), rgb(17, 171, 199));
 }
 #synth{
     display: flex;

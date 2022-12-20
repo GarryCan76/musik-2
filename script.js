@@ -1,21 +1,21 @@
 let context = new AudioContext();
 let volume = new GainNode(context,{gain:0.1});
-let synths = []
-let frequency = 100
+let synths = [];
+let frequency = 100;
 let tick = 0;
-let setup = true
-let track_matrix = []
-let col_length = 20
-let row_length = 8
-let keys = []
-let track_time = []
-let ocs_type = 'sine'
-let nodes = [null];
-let con_nect = true
+let setup = true;
+let track_matrix = [];
+let col_length = 20;
+let row_length = 16;
+let keys = [];
+let track_time = [];
+let ocs_type = 'sine';
+let nodes = [null, null, null, null, null, null, null];
+let con_nect = true;
 const detunes = ["detune_label1", "detune_label2", "detune_label3", "detune_label4"];
 const types = ["type_label1", "type_label2", "type_label3", "type_label4"];
 let destination = false;
-let node = true;
+let node_list = []
 
 setup_func()
 function setup_func(){
@@ -73,14 +73,15 @@ function color(col, row){
     }else {
         y[row] = 0;
     }
+
     row_array = grid_array[col].children;
-    if (row_array[row].style.backgroundColor === "skyblue"){
-        row_array[row].style.backgroundColor = "palegreen";
+    if (row_array[row].style.backgroundColor === "rgb(255, 132, 255)"){
+        row_array[row].style.backgroundColor = "rgb(0, 217, 255)";
     }else {
-        row_array[row].style.backgroundColor = "skyblue";
+        row_array[row].style.backgroundColor = "rgb(255, 132, 255)";
     }
 }
-setInterval(play, 400)
+setInterval(play, 200)
 function play(){
     keys = [];
     for (let i = 0; i < track_time.length; i++){
@@ -121,6 +122,10 @@ function play(){
     }
 }
 function synth_func(type, num, ocs){
+    if (type === 'volume'){
+        volume.gain.value = ocs.value / 25;
+        document.getElementById('volume_label').innerHTML = ocs.value;
+    }
     for (let x = 0; x < 4; x++){
         if (type === "toggle_ocs"){
             if (ocs.checked){
@@ -146,45 +151,67 @@ function synth_func(type, num, ocs){
             synths[x][num].type = ocs_type;
             document.getElementById(types[num]).innerHTML = ocs_type;
         }
-        if (type === "toggle_filter" && x === 1){
-            if (nodes[0] === null){
-                nodes[0] = context.createBiquadFilter();
-                nodes[0].frequency = 500;
+        if (type === "toggle_filter" && x === 0){
+            if (nodes[num] === null){
+                nodes[num] = context.createBiquadFilter();
+                nodes[num].frequency = 500;
             }else {
-                nodes[0] = null;
+                nodes[num] = null;
 
             }
             con_nect = true
         }
-        if (con_nect === true){
-            if (nodes[0] === null){
+
+        if (type === 'toggle_pan' && x === 0){
+            if (nodes[2] === null){
+                nodes[2] = context.createStereoPanner();
+            }else {
+                nodes[2] = null;
+            }
+        }
+        if (con_nect === true && x === 0){
+            if (node_list.length > 0){
+                volume.disconnect(node_list[0])
+                if (node_list.length > 1){
+                    for (let i = 0; i < node_list.length - 1; i++){
+                        node_list[i].disconnect(node_list[i + 1])
+                    }
+                }
+                node_list[node_list.length - 1].disconnect(context.destination)
+            }
+            node_list = []
+            for (let i = 0; i < nodes.length; i++){
+                if (nodes[i] !== null){
+                    node_list.push(nodes[i])
+                }
+            }
+
+            if (node_list.length === 0){
                 volume.connect(context.destination)
                 destination = true;
             }else {
-                volume.connect(nodes[0])
-                nodes[nodes.length - 1].connect(context.destination)
-                if (nodes.length > 1){
-                    nodes[0].connect(nodes[1])
-                }
-                node = true;
                 if (destination === true){
                     volume.disconnect(context.destination)
                     destination = false;
-                    node = false;
                 }
-            }
-            if (node === false){
-                nodes[nodes.length - 1].disconnect(context.destination)
+                if (node_list.length > 1){
+                    for (let i = 0; i < node_list.length; i++){
+                        node_list[0].connect(node_list[1])
+                    }
+                }
+                volume.connect(node_list[0])
+                node_list[node_list.length - 1].connect(context.destination)
             }
         }
-        if (nodes[0] !== null){
+
+        if (nodes[num] !== null){
             if (type === 'filt_freq'){
-                nodes[0].frequency.value = ocs.value;
-                document.getElementById('filt_freq_label').innerHTML = ocs.value;
+                nodes[num].frequency.value = ocs.value;
+                document.getElementById('filt_freq_label' + (num + 1) + '').innerHTML = ocs.value;
             }
             if (type === 'filt_q'){
-                nodes[0].Q.value = ocs.value;
-                document.getElementById('filt_q_label').innerHTML = ocs.value;
+                nodes[num].Q.value = ocs.value;
+                document.getElementById('filt_q_label' + (num + 1) + '').innerHTML = ocs.value;
             }
             if (type === 'filt_pass'){
                 let filtpass = 'lowpass'
@@ -197,13 +224,14 @@ function synth_func(type, num, ocs){
                 } else if (ocs.value === "3") {
                     filtpass = 'allpass';
                 }
-                nodes[0].type = filtpass;
-                document.getElementById('filt_pass_label').innerHTML = filtpass;
+                nodes[num].type = filtpass;
+                document.getElementById('filt_pass_label' + (num + 1) + '').innerHTML = filtpass;
             }
-        }
-        if (type === 'toggle_convol' && x === 1){
-            nodes[1] = context.createDynamicsCompressor()
-            nodes[1].release.value = 0.25
+            if (type === 'panner'){
+                nodes[2].pan.value = ocs.value;
+                document.getElementById('panner_label').innerHTML = ocs.value;
+            }
+
 
         }
     }
