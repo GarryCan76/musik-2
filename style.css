@@ -11,26 +11,28 @@ h1{
     text-align: center;
     width: 300px;
     letter-spacing: 2px;
-    color: #FEFA02;
-    border: #FEFA02 2px;
+    color: #FEFE52;
+    border: #FEFE52 2px;
+    box-shadow: rgba(240, 208, 46, 0.4) 1px 1px, rgba(240, 208, 46, 0.3) 4px 4px, rgba(240, 201, 46, 0.2) 8px 8px, rgba(240, 208, 46, 0.1) 12px 12px, rgba(240, 46, 170, 0.05) 16px 16px;
     border-style: solid solid hidden solid;
 }
 #top{
-    border: #FEFA02 1px;
+    border: #FEFE52 1px;
     border-style: hidden hidden solid hidden;
     margin-bottom: 20px;
 }
 h2{
+    font-family: 'Trebuchet MS', sans-serif;
     margin: 0;
     text-align: center;
-    color: #FEFA02;
+    color: #FEFE52;
     letter-spacing: 2px;
     width: 300px;
-    border: #FEFA02 2px;
+    border: #FEFE52 2px;
     border-style: solid solid hidden solid;
 }
 #content{
-    border: #FEFA02 1px;
+    border: #FEFE52 1px;
     border-style: hidden hidden solid hidden;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -38,7 +40,7 @@ h2{
 h3{
     font-family: 'Trebuchet MS', sans-serif;
     margin: 0;
-    color: #FEFA02;
+    color: #FEFE52;
     text-align: center;
     border: #ff002f 2px;
     border-style: hidden hidden dashed hidden;
@@ -61,6 +63,7 @@ p{
     min-width: 10%;
 }
 #midi{
+
 }
 #midi > div{
     display: flex;
@@ -130,9 +133,9 @@ body::-webkit-scrollbar {
 
 body::-webkit-scrollbar-track {
     background-image: linear-gradient(#2a1111, #170101);
-    border: #FEFA02 1px solid;
+    border: #FEFE52 1px solid;
 }
 
 body::-webkit-scrollbar-thumb {
-    background-color: #FEFA02;
+    background-color: #FEFE52;
 }
