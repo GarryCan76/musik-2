@@ -6,7 +6,7 @@ let frequency = 100;
 let tick = 0;
 let setup = true;
 let track_matrix = [];
-let col_length = 20;
+let col_length = 18;
 let row_length = 16;
 let keys = [];
 let track_time = [];
@@ -77,11 +77,13 @@ function color(col, row){
     }
 
     row_array = grid_array[col].children;
-    if (row_array[row].style.backgroundColor === "rgb(138,23,18)"){
+    if (row_array[row].style.backgroundColor === "rgb(2, 215, 208)"){
         row_array[row].style.backgroundColor = "rgba(211, 20, 20, 0.21)";
+        row_array[row].style.border = "2px #ff002f";
+        row_array[row].style.borderStyle = "solid solid dashed dashed";
     }else {
-        row_array[row].style.backgroundColor = "rgb(1,133,152)";
-        row_array[row].style.border = "2px rgb(2,194,222)";
+        row_array[row].style.backgroundColor = "rgb(2, 215, 208)";
+        row_array[row].style.border = "2px rgb(142,255,248)";
         row_array[row].style.borderStyle = "solid solid dashed dashed";
     }
 }
@@ -89,7 +91,7 @@ maininterval = setInterval(play, speed)
 function play(){
     keys = [];
     for (let i = 0; i < track_time.length; i++){
-        track_time[i].style.filter = "brightness(0.8)";
+        track_time[i].style.filter = "brightness(1.1)";
     }
     track_time = []
     for (let col = 0; col < track_matrix.length; col++){
@@ -101,7 +103,7 @@ function play(){
         }
     }
     for (let i = 0; i < track_time.length; i++){
-        track_time[i].style.filter = "brightness(1)";
+        track_time[i].style.filter = "brightness(0.6)";
     }
 
 
@@ -230,11 +232,11 @@ function synth_func(type, num, ocs){
         if (nodes[num] !== null){
             if (type === 'filt_freq'){
                 nodes[num].frequency.value = ocs.value;
-                document.getElementById('filt_freq_label' + (num + 1) + '').innerHTML = ocs.value;
+                document.getElementById('filt_freq_label' + (num + 1) + '').innerHTML = "[ Frequency = " + ocs.value + " ]";
             }
             if (type === 'filt_q'){
                 nodes[num].Q.value = ocs.value;
-                document.getElementById('filt_q_label' + (num + 1) + '').innerHTML = ocs.value;
+                document.getElementById('filt_q_label' + (num + 1) + '').innerHTML = "[ Q = " + ocs.value + " ]";
             }
             if (type === 'filt_pass'){
                 let filtpass = 'lowpass'
@@ -248,11 +250,11 @@ function synth_func(type, num, ocs){
                     filtpass = 'allpass';
                 }
                 nodes[num].type = filtpass;
-                document.getElementById('filt_pass_label' + (num + 1) + '').innerHTML = filtpass;
+                document.getElementById('filt_pass_label' + (num + 1) + '').innerHTML = "[ Filter type = " + filtpass + " ]";
             }
             if (type === 'panner'){
                 nodes[2].pan.value = ocs.value;
-                document.getElementById('panner_label').innerHTML = ocs.value;
+                document.getElementById('panner_label').innerHTML = "[ Pan = " + ocs.value + " ]";
             }
 
 

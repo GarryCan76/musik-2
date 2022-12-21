@@ -7,24 +7,27 @@
 </head>
 <body id="body">
 </body>
-<div>
-    <h1>0scillatron MK 1</h1>
+<div id="top">
+    <h1>0SCILLATRON MK-1</h1>
 </div>
 <div id="midi"></div>
-<h2>Synthesizer</h2>
+<div id="content"><h2>Synthesizer</h2></div>
 <div id="synth">
     <div>
-        <div>
+        <div id="master">
             <h3>Master</h3>
             <label id="volume_label" for="volume">[ Volume = 4 ]</label>
             <input type="range" id="volume" step="" value="4" max="100" oninput="synth_func('volume', 0, this)">
             <label id="speed_label" for="delay">[ Delay = 200 ms ]</label>
             <input type="range" id="delay" step="10" value="200" max="750" oninput="synth_func('delay', 0, this)">
+            <h3>Pan</h3>
             <label class="onoff" id="toggle_panner" for="toggle_pan">OFF</label>
             <input id="toggle_pan" type="checkbox" oninput="synth_func('toggle_pan', 2, this)">
-            <label id="panner_label" for="panner">0</label>
+            <label id="panner_label" for="panner">[ Pan = 0]</label>
             <input type="range" id="panner" step="0.1" value="0" min="-1" max="1" oninput="synth_func('panner', 2, this)">
         </div>
+    </div>
+    <div>
         <div><h3>Oscillator 1</h3>
             <label for="toggle_ocs1"><input id="toggle_ocs1" type="checkbox" oninput="synth_func('toggle_ocs', 0, this)"></label><label class="onoff" id="toggle_1" for="toggle_ocs1">OFF</label>
             <label id="detune_label1" for="detune1">[ Detune = 0 Cents ]</label>
@@ -36,7 +39,7 @@
             <label for="toggle_ocs2"><input id="toggle_ocs2" type="checkbox" oninput="synth_func('toggle_ocs', 1, this)"></label><label class="onoff" id="toggle_2" for="toggle_ocs2">OFF</label>
             <label id="detune_label2" for="detune1">[ Detune = 0 Cents ]</label>
             <input type="range" id="detune2" value="0" min="-1000" max="1000" oninput="synth_func('detune_ocs', 1, this)">
-            <label id="type_label2" for="type2">Oscillator type = [sine]</label>
+            <label id="type_label2" for="type2">[ Oscillator type = sine ]</label>
             <input type="range" id="type2" value="0" max="3" oninput="synth_func('type_ocs', 1, this)">
         </div>
     </div>
@@ -45,37 +48,42 @@
             <label for="toggle_ocs3"><input id="toggle_ocs3" type="checkbox" oninput="synth_func('toggle_ocs', 2, this)"></label><label class="onoff" id="toggle_3" for="toggle_ocs3">OFF</label>
             <label id="detune_label3" for="detune3">[ Detune = 0 Cents ]</label>
             <input type="range" id="detune3" value="0" min="-1000" max="1000" oninput="synth_func('detune_ocs', 2, this)">
-            <label id="type_label3" for="type3">Oscillator type = [sine]</label>
+            <label id="type_label3" for="type3">[ Oscillator type = sine ]</label>
             <input type="range" id="type3" value="0" max="3" oninput="synth_func('type_ocs', 2, this)">
         </div>
         <div><h3>Oscillator 4</h3>
             <label for="toggle_ocs4"><input id="toggle_ocs4" type="checkbox" oninput="synth_func('toggle_ocs', 3, this)"></label><label class="onoff" id="toggle_4" for="toggle_ocs4">OFF</label>
             <label id="detune_label4" for="detune4">[ Detune = 0 Cents ]</label>
             <input type="range" id="detune4" value="0" min="-1000" max="1000" oninput="synth_func('detune_ocs', 3, this)">
-            <label id="type_label4" for="type4">Oscillator type = [sine]</label>
+            <label id="type_label4" for="type4">[ Oscillator type = sine ]</label>
             <input type="range" id="type4" value="0" max="3" oninput="synth_func('type_ocs', 3, this)">
         </div>
     </div>
     <div>
         <div><h3>Filter 1</h3>
             <input id="toggle_fil1" type="checkbox" oninput="synth_func('toggle_filter', 0, this)"><label class="onoff" id="toggle_filter_1" for="toggle_fil1">OFF</label>
-            <label id="filt_freq_label1" for="filt_freq1">500</label>
+            <label id="filt_freq_label1" for="filt_freq1">[ Frequency = 500 ]</label>
             <input type="range" id="filt_freq1" value="500" max="3000" oninput="synth_func('filt_freq', 0, this)">
-            <label id="filt_q_label1" for="filt_q1">1</label>
+            <label id="filt_q_label1" for="filt_q1">[ Q = 1 ]</label>
             <input type="range" id="filt_q1" value="1" max="100" oninput="synth_func('filt_q', 0, this)">
-            <label id="filt_pass_label1" for="filt_pass1">lowpass</label>
+            <label id="filt_pass_label1" for="filt_pass1">[ Filter type = lowpass ]</label>
             <input type="range" id="filt_pass1" value="0" max="3" oninput="synth_func('filt_pass', 0, this)">
         </div>
         <div><h3>Filter 2</h3>
             <input id="toggle_fil2" type="checkbox" oninput="synth_func('toggle_filter', 1, this)"><label class="onoff" id="toggle_filter_2" for="toggle_fil2">OFF</label>
-            <label id="filt_freq_label2" for="filt_freq2">500</label>
+            <label id="filt_freq_label2" for="filt_freq2">[ Frequency = 500 ]</label>
             <input type="range" id="filt_freq2" value="500" max="3000" oninput="synth_func('filt_freq', 1, this)">
-            <label id="filt_q_label2" for="filt_q2">1</label>
+            <label id="filt_q_label2" for="filt_q2">[ Q = 1 ]</label>
             <input type="range" id="filt_q2" value="1" max="100" oninput="synth_func('filt_q', 1, this)">
-            <label id="filt_pass_label2" for="filt_pass2">lowpass</label>
+            <label id="filt_pass_label2" for="filt_pass2">[ Filter type = lowpass ]</label>
             <input type="range" id="filt_pass2" value="0" max="3" oninput="synth_func('filt_pass', 1, this)">
         </div>
     </div>
+</div>
+<div>
+    <h4>Made by Garry</h4>
+    <a href="https://www.youtube.com/watch?v=VhvDy8h3FG8" target="_blank"><h4>Inspiration</h4></a>
+    <h4>Copyright &copy;2022 0SCILLATRON MK-1. All Right Reserved</h4>
 </div>
 <script src="script.js"></script>
 </html>
