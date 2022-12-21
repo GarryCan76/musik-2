@@ -1,5 +1,6 @@
 let context = new AudioContext();
 let volume = new GainNode(context,{gain:0.1});
+let speed = 200;
 let synths = [];
 let frequency = 100;
 let tick = 0;
@@ -16,6 +17,7 @@ const detunes = ["detune_label1", "detune_label2", "detune_label3", "detune_labe
 const types = ["type_label1", "type_label2", "type_label3", "type_label4"];
 let destination = false;
 let node_list = []
+let maininterval;
 
 setup_func()
 function setup_func(){
@@ -75,17 +77,19 @@ function color(col, row){
     }
 
     row_array = grid_array[col].children;
-    if (row_array[row].style.backgroundColor === "rgb(255, 132, 255)"){
-        row_array[row].style.backgroundColor = "rgb(0, 217, 255)";
+    if (row_array[row].style.backgroundColor === "rgb(138,23,18)"){
+        row_array[row].style.backgroundColor = "rgba(211, 20, 20, 0.21)";
     }else {
-        row_array[row].style.backgroundColor = "rgb(255, 132, 255)";
+        row_array[row].style.backgroundColor = "rgb(1,133,152)";
+        row_array[row].style.border = "2px rgb(2,194,222)";
+        row_array[row].style.borderStyle = "solid solid dashed dashed";
     }
 }
-setInterval(play, 200)
+maininterval = setInterval(play, speed)
 function play(){
     keys = [];
     for (let i = 0; i < track_time.length; i++){
-        track_time[i].style.filter = "hue-rotate(0deg)";
+        track_time[i].style.filter = "brightness(0.8)";
     }
     track_time = []
     for (let col = 0; col < track_matrix.length; col++){
@@ -97,7 +101,7 @@ function play(){
         }
     }
     for (let i = 0; i < track_time.length; i++){
-        track_time[i].style.filter = "hue-rotate(90deg)";
+        track_time[i].style.filter = "brightness(1)";
     }
 
 
@@ -124,19 +128,29 @@ function play(){
 function synth_func(type, num, ocs){
     if (type === 'volume'){
         volume.gain.value = ocs.value / 25;
-        document.getElementById('volume_label').innerHTML = ocs.value;
+        document.getElementById('volume_label').innerHTML = "[ Volume = " + ocs.value + " ]";
+    }
+    if (type === 'delay'){
+        speed = ocs.value;
+        document.getElementById('speed_label').innerHTML = "[ Delay = " + ocs.value + "ms ]";
+        clearInterval(maininterval)
+        maininterval = setInterval(play, speed)
     }
     for (let x = 0; x < 4; x++){
         if (type === "toggle_ocs"){
             if (ocs.checked){
                 synths[x][num].connect(volume)
+                document.getElementById('toggle_' + (num + 1)).innerHTML = "ON"
+                document.getElementById('toggle_' + (num + 1)).style.backgroundColor = "#FF002F35";
             }else {
                 synths[x][num].disconnect(volume)
+                document.getElementById('toggle_' + (num + 1)).innerHTML = "OFF"
+                document.getElementById('toggle_' + (num + 1)).style.backgroundColor = "rgba(58, 13, 24, 0.45";
             }
         }
         if (type === "detune_ocs"){
-            document.getElementById(detunes[num]).innerHTML = ocs.value;
-            synths[x][num].detune.value = ocs.value;
+            document.getElementById(detunes[num]).innerHTML = "[ Detune = " + ocs.value + " Cents ]";
+            synths[x][num].detune.value =  ocs.value;
         }
         if (type === "type_ocs") {
             if (ocs.value === "0") {
@@ -149,15 +163,18 @@ function synth_func(type, num, ocs){
                 ocs_type = 'triangle';
             }
             synths[x][num].type = ocs_type;
-            document.getElementById(types[num]).innerHTML = ocs_type;
+            document.getElementById(types[num]).innerHTML = "[ Oscillator type = " + ocs_type + " ]";
         }
         if (type === "toggle_filter" && x === 0){
             if (nodes[num] === null){
                 nodes[num] = context.createBiquadFilter();
                 nodes[num].frequency = 500;
+                document.getElementById('toggle_filter_' + (num + 1)).innerHTML = "ON"
+                document.getElementById('toggle_filter_' + (num + 1)).style.backgroundColor = "#FF002F35";
             }else {
                 nodes[num] = null;
-
+                document.getElementById('toggle_filter_' + (num + 1)).innerHTML = "OFF"
+                document.getElementById('toggle_filter_' + (num + 1)).style.backgroundColor = "rgba(58, 13, 24, 0.45";
             }
             con_nect = true
         }
@@ -165,8 +182,14 @@ function synth_func(type, num, ocs){
         if (type === 'toggle_pan' && x === 0){
             if (nodes[2] === null){
                 nodes[2] = context.createStereoPanner();
+                console.log('toggle_filter_' + (num + 1))
+                document.getElementById("toggle_panner").innerHTML = "ON"
+                document.getElementById("toggle_panner").style.backgroundColor = "#FF002F35";
             }else {
                 nodes[2] = null;
+
+                document.getElementById("toggle_panner").innerHTML = "OFF"
+                document.getElementById("toggle_panner").style.backgroundColor = "rgba(58, 13, 24, 0.45";
             }
         }
         if (con_nect === true && x === 0){
